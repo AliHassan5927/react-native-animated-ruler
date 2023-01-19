@@ -8,6 +8,8 @@ import {
   Dimensions,
   ViewStyle
 } from 'react-native';
+import DropDown from '../src/../src/../../../src/assets/svgs/dropDown.svg'
+
 
 const { width } = Dimensions.get('screen');
 const { height } = Dimensions.get('screen');
@@ -215,7 +217,7 @@ class Ruler extends React.Component<Props> {
           width: this.rulerWidth,
           flexDirection: 'row',
           justifyContent: 'flex-start',
-          alignItems: 'flex-end'
+          // alignItems: 'flex-end'
         }}
       >
         {/* Spacer */}
@@ -234,7 +236,7 @@ class Ruler extends React.Component<Props> {
                 backgroundColor: i % step === 0 ? stepColor : normalColor,
                 height: i % step === 0 ? stepHeight : normalHeight,
                 width: segmentWidth,
-                marginRight: segmentSpacing
+                marginRight: segmentSpacing,
               }}
             />
           );
@@ -344,7 +346,7 @@ class Ruler extends React.Component<Props> {
             />
 
             {/* Unit */}
-            <Text
+            {/* <Text
               style={{
                 marginBottom: unitBottom,
                 fontSize: unitSize,
@@ -353,18 +355,21 @@ class Ruler extends React.Component<Props> {
               }}
             >
               {unit}
-            </Text>
+            </Text> */}
           </View>
 
           {/* Indicator */}
           <View
-            style={{
-              height: indicatorHeight,
-              backgroundColor: indicatorColor,
-              width: segmentWidth
-            }}
+          // style={{
+          //   height: indicatorHeight,
+          //   backgroundColor: indicatorColor,
+          //   width: segmentWidth
+          // }}
           />
+
+          <DropDown height={30} />
         </View>
+
       </SafeAreaView>
     );
   }
@@ -375,7 +380,7 @@ Ruler.defaultProps = {
   vertical: false,
   width,
   height: height * 0.23,
-  onChangeValue: () => {},
+  onChangeValue: () => { },
   minimum: 0,
   maximum: 100,
   segmentWidth: 2,
