@@ -8,6 +8,7 @@ import {
   Dimensions,
   ViewStyle
 } from 'react-native';
+import { colors } from '../../../src/services';
 import DropDown from '../src/../src/../../../src/assets/svgs/dropDown.svg'
 
 
@@ -149,6 +150,8 @@ type Props = {
    * On value change
    */
   onChangeValue: Function;
+
+  weightScale: Boolean;
 };
 
 class Ruler extends React.Component<Props> {
@@ -205,7 +208,8 @@ class Ruler extends React.Component<Props> {
       stepColor,
       stepHeight,
       normalColor,
-      normalHeight
+      normalHeight,
+      weightScale,
     } = this.props;
 
     // Create an array to make a ruler
@@ -225,20 +229,44 @@ class Ruler extends React.Component<Props> {
           style={{
             width: this.spacerWidth
           }}
+        // style={{
+        //   width: width * 0.3
+        // }}
         />
-
         {/* Ruler */}
         {data.map(i => {
+          let feet = 1
+
           return (
-            <View
-              key={i}
-              style={{
-                backgroundColor: i % step === 0 ? stepColor : normalColor,
-                height: i % step === 0 ? stepHeight : normalHeight,
-                width: segmentWidth,
-                marginRight: segmentSpacing,
-              }}
-            />
+            <>
+              <View
+                key={i}
+                style={{
+                  backgroundColor: i % step === 0 ? stepColor : normalColor,
+                  height: i % step === 0 ? stepHeight : normalHeight,
+                  width: segmentWidth,
+                  marginRight: segmentSpacing,
+                }}
+              />
+              {
+                weightScale ? (
+
+                  i % step === 0 ?
+                    <Text style={{ marginTop: 40, marginLeft: -22.7, color: colors.textColor3 }}>
+                      {i}
+                    </Text>
+                    : null
+
+                ) : i % step === 0 ?
+                  <Text style={{ marginTop: 40, marginLeft: -12, color: colors.textColor3 }}>
+
+                    {i / 12}
+                  </Text>
+                  : null
+              }
+
+
+            </>
           );
         })}
 
@@ -298,6 +326,7 @@ class Ruler extends React.Component<Props> {
           bounces={false}
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={16}
+          decelerationRate={0.9}
           snapToInterval={this.snapSegment}
           onScroll={Animated.event(
             [
@@ -338,12 +367,14 @@ class Ruler extends React.Component<Props> {
             <TextInput
               ref={this.textInputRef}
               style={{
-                fontSize: numberSize,
+                fontSize: 0,
                 fontFamily: numberFontFamily,
                 color: numberColor
               }}
               defaultValue={minimum.toString()}
             />
+
+
 
             {/* Unit */}
             {/* <Text
@@ -367,7 +398,7 @@ class Ruler extends React.Component<Props> {
           // }}
           />
 
-          <DropDown height={30} />
+          <DropDown height={31} />
         </View>
 
       </SafeAreaView>
